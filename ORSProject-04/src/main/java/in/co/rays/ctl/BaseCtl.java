@@ -97,6 +97,9 @@ public abstract class BaseCtl extends HttpServlet {
      */
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        System.out.println("Service");
+        
         preload(request);
 
         String op = DataUtility.getString(request.getParameter("operation"));

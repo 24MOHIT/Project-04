@@ -150,13 +150,13 @@ public class RoleModel {
 
 	}
 
-	public RoleBean findByPk(int id) throws Exception {
+	public RoleBean findByPk(long id) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
 
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_role where id=?");
 
-		pstmt.setInt(1, id);
+		pstmt.setLong(1, id);
 
 		ResultSet rs = pstmt.executeQuery();
 

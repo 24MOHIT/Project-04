@@ -9,6 +9,7 @@ import java.util.List;
 
 import in.co.rays.bean.RoleBean;
 import in.co.rays.bean.UserBean;
+import in.co.rays.exception.ApplicationException;
 import in.co.rays.model.RoleModel;
 import in.co.rays.model.UserModel;
 import in.co.rays.util.JDBCDataSource;
@@ -20,9 +21,37 @@ public class TestUserModel {
 //		testAdd();
 //		testUpdate();
 //		testDelete();
-		testSearch();
+//		testSearch();
 //		testfindByPk();
 //		testfindByLogin();
+//		testAuthenticate();
+	}
+
+	private static void testAuthenticate() throws Exception {
+
+		String login = "meenabhardwaj@gmail.com";
+		String password = "password123";
+		
+		UserModel model = new UserModel();
+		UserBean bean = model.authenticate(login, password);
+		
+		if (bean != null) {
+			System.out.println(bean.getId());
+			System.out.println(bean.getFirstName());
+			System.out.println(bean.getLastName());
+			System.out.println(bean.getLogin());
+			System.out.println(bean.getPassword());
+			System.out.println(bean.getDob());
+			System.out.println(bean.getMobileNo());
+			System.out.println(bean.getRoleId());
+			System.out.println(bean.getGender());
+			System.out.println(bean.getCreatedBy());
+			System.out.println(bean.getModifiedBy());
+			System.out.println(bean.getCreatedDatetime());
+			System.out.println(bean.getModifiedDatetime());
+		}else {
+			System.out.println("user not found");
+		}
 	}
 
 	private static void testfindByLogin() throws Exception {
