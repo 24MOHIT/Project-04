@@ -89,20 +89,28 @@ public class RoleModel {
 	}
 	
 	public List search(RoleBean bean, int pageNo, int pageSize) throws Exception {
+		
 
 		Connection conn = JDBCDataSource.getConnection();
 		
 		StringBuffer sql = new StringBuffer("select * from st_role where 1=1");
 		
 		if (bean != null) {
+			
 			if (bean.getName() != null && bean.getName().length() > 0) {
 				sql.append(" and name like '" + bean.getName() + "'");
 			}
+			
+			if (bean.getId() > 0) {
+				sql.append(" and id = "+ bean.getId() ) ;
+			}
+			
 		}
+		
 		
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
-			sql.append(" limit " + pageNo + "," + pageSize);
+			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
 		
 		System.out.println("sql =" + sql.toString());
@@ -112,9 +120,9 @@ public class RoleModel {
 		ResultSet rs = pstmt.executeQuery();
 
 		List list = new ArrayList();
+		
 
 		while (rs.next()) {
-
 			bean = new RoleBean();
 			bean.setId(rs.getLong(1));
 			bean.setName(rs.getString(2));
@@ -123,13 +131,10 @@ public class RoleModel {
 			bean.setModifiedBy(rs.getString(5));
 			bean.setCreatedDatetime(rs.getTimestamp(6));
 			bean.setModifiedDatetime(rs.getTimestamp(7));
-
 			list.add(bean);
-
 		}
 		JDBCDataSource.closeConnection(conn);
 		return list;
-
 	}
 
 	public int nextpk() throws Exception {
@@ -146,6 +151,7 @@ public class RoleModel {
 			pk = rs.getInt(1);
 			System.out.println("max id=" + pk);
 		}
+		JDBCDataSource.closeConnection(conn);
 		return pk + 1;
 
 	}
@@ -175,6 +181,7 @@ public class RoleModel {
 			bean.setModifiedDatetime(rs.getTimestamp(7));
 
 		}
+		JDBCDataSource.closeConnection(conn);
 		return bean;
 	}
 
@@ -202,6 +209,7 @@ public class RoleModel {
 			bean.setCreatedDatetime(rs.getTimestamp(6));
 			bean.setModifiedDatetime(rs.getTimestamp(7));
 		}
+		JDBCDataSource.closeConnection(conn);
 		return bean;
 
 	}

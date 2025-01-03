@@ -101,8 +101,11 @@ public abstract class BaseCtl extends HttpServlet {
         System.out.println("Service");
         
         preload(request);
+        
 
         String op = DataUtility.getString(request.getParameter("operation"));
+        
+        System.out.println("op="+op ); 
 
         // Perform validation for all operations except for these
         if (DataValidator.isNotNull(op) && !OP_CANCEL.equalsIgnoreCase(op) && !OP_VIEW.equalsIgnoreCase(op)
@@ -115,6 +118,7 @@ public abstract class BaseCtl extends HttpServlet {
                 return;
             }
         }
+        
 
         // Pass the request to the appropriate HTTP method (GET/POST)
         super.service(request, response);

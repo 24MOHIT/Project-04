@@ -117,8 +117,22 @@ public class UserCtl extends BaseCtl {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String op = DataUtility.getString(request.getParameter("operation"));
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		if (id > 0) {
+
+			UserModel model = new UserModel();
+
+			try {
+				UserBean bean = model.findByPk(id);
+				ServletUtility.setBean(bean, request);
+			} catch ( Exception e) {
+				e.printStackTrace();
+			}
+		}
 		ServletUtility.forward(getView(), request, response);
-	}
+	}	
 
 	@Override
 	protected void preload(HttpServletRequest request) {
@@ -158,6 +172,24 @@ public class UserCtl extends BaseCtl {
 			}
 		} else if (op.equalsIgnoreCase(OP_RESET)) {
 			ServletUtility.redirect(ORSView.USER_CTL, request, response);
+			return;
+		}
+		
+		if (op.equalsIgnoreCase(OP_UPDATE)) {
+			try {
+				model.update(bean);
+				ServletUtility.setSuccessMessage("User Update Successfully..!!", request);
+				ServletUtility.forward(getView(), request, response);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("login id already exist", request);
+				ServletUtility.forward(getView(), request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (op.equalsIgnoreCase(OP_CANCEL)) {
+			ServletUtility.redirect(ORSView.USER_CTL, request, response);
+			return;
 		}
 	}
 

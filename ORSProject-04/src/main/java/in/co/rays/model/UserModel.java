@@ -127,7 +127,7 @@ public class UserModel {
 
 		PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id=?");
 
-		pstmt.setLong(1, id);
+		pstmt.setInt(1, id);
 
 		int i = pstmt.executeUpdate();
 
@@ -150,6 +150,11 @@ public class UserModel {
 			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
 				sql.append(" and first_name like '" + bean.getFirstName() + "'");
 			}
+			
+		if (bean.getRoleId() > 0) {
+			sql.append(" and role_id like " + bean.getRoleId()); 
+		}
+			
 		}
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
@@ -190,13 +195,13 @@ public class UserModel {
 
 	}
 
-	public UserBean findByPk(int id) throws Exception {
+	public UserBean findByPk(long id) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
 
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where id=?");
 
-		pstmt.setInt(1, id);
+		pstmt.setLong(1, id);
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -221,6 +226,7 @@ public class UserModel {
 			bean.setModifiedDatetime(rs.getTimestamp(13));
 
 		}
+		JDBCDataSource.closeConnection(conn);
 		return bean;
 	}
 
@@ -264,6 +270,7 @@ public class UserModel {
 		} catch (Exception e) {
 			throw new ApplicationException("Exception in getting user by login" + e.getMessage());
 		}
+		JDBCDataSource.closeConnection(conn);
 		return bean;
 	}
 
@@ -308,6 +315,7 @@ public class UserModel {
 		} catch (Exception e) {
 			throw new ApplicationException("Exception in getting user by authenticate" + e.getMessage());
 		}
+		JDBCDataSource.closeConnection(conn);
 		return bean;
 	}
 }

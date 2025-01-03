@@ -48,7 +48,14 @@
 		<tr>
 			<td colspan="2">
 			<a href="<%=ORSView.USER_CTL%>">Add User</a>|
-			<a href="<%=ORSView.USER_LIST_CTL%>">User List</a>
+			<a href="<%=ORSView.USER_LIST_CTL%>">User List</a>|
+			<a href="<%=ORSView.ROLE_CTL%>">Add Role</a>|
+			<a href="<%=ORSView.ROLE_LIST_CTL%>">Role List</a>|
+			<a href="<%=ORSView.COLLEGE_CTL%>">Add College</a>|
+			<a href="<%=ORSView.COLLEGE_LIST_CTL%>">College List</a>|
+			
+			<a href="<%=ORSView.COURSE_CTL%>">Add Course</a>
+			
 		</tr>
 		<%
 			}

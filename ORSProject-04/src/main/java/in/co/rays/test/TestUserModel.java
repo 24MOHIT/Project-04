@@ -86,7 +86,7 @@ public class TestUserModel {
 
 	private static void testfindByPk() throws Exception {
 		
-		int id=1;
+		long id=1;
 		
 		UserModel model=new UserModel();
 		
@@ -176,7 +176,7 @@ public class TestUserModel {
 		
 		UserModel model=new UserModel();
 		
-		model.delete(3);
+	model.delete(3);
 		
 	}
 

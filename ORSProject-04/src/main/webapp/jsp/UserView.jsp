@@ -21,22 +21,36 @@
 	<form action="<%=ORSView.USER_CTL%>" method="post">
 		<jsp:useBean id="bean" class="in.co.rays.bean.UserBean"
 			scope="request" />
-			
-			<%
-			List roleList =(List)request.getAttribute("roleList");
-			%>
+
+		<%
+			List roleList = (List) request.getAttribute("roleList");
+		%>
 
 		<div align="center">
+
+			<%
+				if (bean != null && bean.getId() > 0) {
+			%>
+			<h1>
+				<font color="navy">Update User</font>
+			</h1>
+			<%
+				} else {
+			%>
 			<h1>
 				<font color="navy">Add User</font>
 			</h1>
+			<%
+				}
+			%>
+
 
 			<%
 				if (ServletUtility.getSuccessMessage(request) != null) {
 			%>
 			<h3>
-			<span style="color: green"><%=ServletUtility.getSuccessMessage(request)%></span>
-			<span style="color: red"><%=ServletUtility.getErrorMessage(request) %></span>
+				<span style="color: green"><%=ServletUtility.getSuccessMessage(request)%></span>
+				<span style="color: red"><%=ServletUtility.getErrorMessage(request)%></span>
 			</h3>
 			<br>
 			<%
@@ -130,10 +144,25 @@
 
 				</tr>
 				<tr>
+					<%
+						if(bean != null && bean.getId() > 0){
+					%>
+					<td></td>
+					<td colspan="3"><input type="submit" name="operation"
+						value="<%=UserCtl.OP_UPDATE%>" /> <input type="submit"
+						name="operation" value="<%=UserCtl.OP_CANCEL%>" /></td>
+					
+					<%
+						}else{
+					%>
 					<td></td>
 					<td colspan="3"><input type="submit" name="operation"
 						value="<%=UserCtl.OP_SAVE%>" /> <input type="submit"
 						name="operation" value="<%=UserCtl.OP_RESET%>" /></td>
+						
+					<%
+						}
+					%>
 				</tr>
 			</table>
 		</div>
