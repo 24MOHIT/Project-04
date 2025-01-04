@@ -110,6 +110,7 @@ public class CollegeModel {
 
 		System.out.println("Data Delete=" + i);
 	}
+
 	public List list() throws Exception {
 		return search(null, 0, 0);
 	}
@@ -117,15 +118,16 @@ public class CollegeModel {
 	public List search(CollegeBean bean, int pageNo, int pageSize) throws Exception {
 
 		Connection conn = JDBCDataSource.getConnection();
-		
+
 		StringBuffer sql = new StringBuffer("select * from st_college where 1=1");
-		
+
 		if (bean != null) {
 			if (bean.getName() != null && bean.getName().length() > 0) {
+				System.out.println("Hello"+bean.getName());
 				sql.append(" and name like '" + bean.getName() + "'");
 			}
 		}
-		
+
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
 			sql.append(" limit " + pageNo + "," + pageSize);

@@ -6,8 +6,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Include jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<!-- Include jQuery UI CSS -->
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="/ORSProject-04/js/checkbox.js"></script>
+<script src="/ORSProject-04/js/datepicker.js"></script>
 </head>
 <body>
 
@@ -46,16 +54,13 @@
 			if (userLoggedIn) {
 		%>
 		<tr>
-			<td colspan="2">
-			<a href="<%=ORSView.USER_CTL%>">Add User</a>|
-			<a href="<%=ORSView.USER_LIST_CTL%>">User List</a>|
-			<a href="<%=ORSView.ROLE_CTL%>">Add Role</a>|
-			<a href="<%=ORSView.ROLE_LIST_CTL%>">Role List</a>|
-			<a href="<%=ORSView.COLLEGE_CTL%>">Add College</a>|
-			<a href="<%=ORSView.COLLEGE_LIST_CTL%>">College List</a>|
-			
-			<a href="<%=ORSView.COURSE_CTL%>">Add Course</a>
-			
+			<td colspan="2"><a href="<%=ORSView.USER_CTL%>">Add User</a>| <a
+				href="<%=ORSView.USER_LIST_CTL%>">User List</a>| <a
+				href="<%=ORSView.ROLE_CTL%>">Add Role</a>| <a
+				href="<%=ORSView.ROLE_LIST_CTL%>">Role List</a>| <a
+				href="<%=ORSView.COLLEGE_CTL%>">Add College</a>| <a
+				href="<%=ORSView.COLLEGE_LIST_CTL%>">College List</a>| <a
+				href="<%=ORSView.COURSE_CTL%>">Add Course</a>
 		</tr>
 		<%
 			}

@@ -29,20 +29,19 @@
 
 			<h1>Role List</h1>
 			<%
-				List list =  ServletUtility.getList(request);
+				List list = ServletUtility.getList(request);
 				List roleList = (List) request.getAttribute("roleList");
-				
+
 				int pageNo = ServletUtility.getPageNo(request);
 				int pageSize = ServletUtility.getPageSize(request);
-				int index = ((pageNo - 1) * pageSize)+ 1;
+				int index = ((pageNo - 1) * pageSize) + 1;
 				int nextPageSize = DataUtility.getInt(request.getAttribute("nextListSize").toString());
-				
+
 				Iterator it = list.iterator();
-				
 			%>
-			
-			<input type="hidden" name="pageNo" value="<%=pageNo%>"> 
-			<input type="hidden" name="pageSize" value="<%=pageSize%>">
+
+			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
+				type="hidden" name="pageSize" value="<%=pageSize%>">
 
 			<table>
 				<th>Role :</th>
@@ -67,11 +66,10 @@
 				</tr>
 
 				<%
-					
 					while (it.hasNext()) {
 						bean = (RoleBean) it.next();
 						RoleModel model = new RoleModel();
-						RoleBean  rolebean = model.findByPk(bean.getId());
+						RoleBean rolebean = model.findByPk(bean.getId());
 				%>
 
 				<tr align="center">
@@ -81,7 +79,8 @@
 					<td><%=bean.getId()%></td>
 					<td><%=bean.getName()%></td>
 					<td><%=bean.getDescription()%></td>
-					<td><a href="<%=ORSView.ROLE_CTL%>?id=<%=bean.getId()%> " <%if (userBean.getId() == bean.getId() && bean.getId() == RoleBean.ADMIN) {%>
+					<td><a href="<%=ORSView.ROLE_CTL%>?id=<%=bean.getId()%> "
+						<%if (userBean.getId() == bean.getId() && bean.getId() == RoleBean.ADMIN) {%>
 						onclick="return false;" <%}%>>edit</a></td>
 
 				</tr>
@@ -104,11 +103,12 @@
 					<td><input type="submit" name="operation" value="Delete"></td>
 
 					<td align="right"><input type="submit" name="operation"
-						value="<%=RoleListCtl.OP_NEXT%>" <%=(nextPageSize != 0) ? "" : "disabled"%>></td>
+						value="<%=RoleListCtl.OP_NEXT%>"
+						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
 
 				</tr>
 			</table>
-			
+
 
 		</form>
 	</div>

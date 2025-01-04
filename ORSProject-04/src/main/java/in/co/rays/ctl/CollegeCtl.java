@@ -15,7 +15,7 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet("/CollegeCtl")
+@WebServlet(name = "/CollegeCtl", urlPatterns = {"/ctl/CollegeCtl"})
 public class CollegeCtl extends BaseCtl {
 
 	@Override
@@ -116,16 +116,18 @@ public class CollegeCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Data Added Successfully..!!", request);
 				ServletUtility.forward(getView(), request, response);
 			}
+			
+			if (OP_RESET.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
+				return;
+			}
+			
 		} catch (Exception e) {
 			
 			ServletUtility.setBean(bean, request);
 			
 			ServletUtility.setErrorMessage("Name Allready Exist...", request);
 			ServletUtility.forward(getView(), request, response);
-		}
-		
-		if (OP_RESET.equalsIgnoreCase(op)) {
-			ServletUtility.redirect(getView(), request, response);
 		}
 
 		ServletUtility.forward(getView(), request, response);
