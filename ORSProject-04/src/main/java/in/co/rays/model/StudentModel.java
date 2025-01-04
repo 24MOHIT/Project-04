@@ -123,6 +123,9 @@ public class StudentModel {
 		pstmt.setLong(1, id);
 		
 		int i=pstmt.executeUpdate();
+		
+		JDBCDataSource.closeConnection(conn);
+
 		 
 		System.out.println("Data Delete=" + i);
 	}

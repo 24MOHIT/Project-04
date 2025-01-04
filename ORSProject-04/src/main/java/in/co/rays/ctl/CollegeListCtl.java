@@ -74,19 +74,7 @@ public class CollegeListCtl extends BaseCtl {
 			return;
 		}
 		
-		if (OP_SEARCH.equalsIgnoreCase(op)) {
-			
-			System.out.println("aya");
-			
-			model.search(bean, 0, 0);
-			
-			System.out.println("aya 1");
-			ServletUtility.setBean(bean, request);
-			ServletUtility.setList(list, request);
-			System.out.println("aya 2");
-			ServletUtility.forward(getView(), request, response);
-			
-		}
+	
 		
 		} catch (Exception e) {
 			e.printStackTrace();
