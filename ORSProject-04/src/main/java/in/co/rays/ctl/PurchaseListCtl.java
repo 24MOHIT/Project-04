@@ -8,31 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import in.co.rays.bean.BaseBean;
-import in.co.rays.bean.CollegeBean;
-import in.co.rays.model.CollegeModel;
+import in.co.rays.bean.PurchaseBean;
+import in.co.rays.model.PurchaseModel;
 import in.co.rays.util.DataUtility;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet(name = "/CollegeListCtl", urlPatterns = { "/ctl/CollegeListCtl" })
-public class CollegeListCtl extends BaseCtl {
-
-	@Override
-	protected BaseBean populateBean(HttpServletRequest request) {
-
-		CollegeBean bean = new CollegeBean();
-
-		bean.setName(DataUtility.getString(request.getParameter("name")));
-
-		return bean;
-	}
+@WebServlet(name = "/PurchaseListCtl", urlPatterns = { "/ctl/PurchaseListCtl" })
+public class PurchaseListCtl extends BaseCtl {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		CollegeModel model = new CollegeModel();
-		CollegeBean bean = new CollegeBean();
+		PurchaseModel model = new PurchaseModel();
+
+		PurchaseBean bean = new PurchaseBean();
 
 		try {
 			List list = model.search(bean, 0, 0);
@@ -49,39 +39,32 @@ public class CollegeListCtl extends BaseCtl {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List list = null;
-
 		String op = DataUtility.getString(request.getParameter("operation"));
+
 		String[] ids = request.getParameterValues("ids");
 
-		CollegeModel model = new CollegeModel();
-		CollegeBean bean = (CollegeBean) populateBean(request);
+		PurchaseModel model = new PurchaseModel();
+		PurchaseBean bean = new PurchaseBean();
+
 		try {
 			if (OP_DELETE.equalsIgnoreCase(op)) {
-
 				for (String id : ids) {
 
-					model.delete(DataUtility.getLong(id));
-
+					model.delete(DataUtility.getInt(id));
+					List list = model.search(bean, 0, 0);
+					ServletUtility.setList(list, request);
 				}
 			}
-
-			if (OP_SEARCH.equalsIgnoreCase(op)) {
-				ServletUtility.setBean(bean, request);
-
-			}
-
 			if (OP_NEW.equalsIgnoreCase(op)) {
-
-				ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
-				return;
+				
+				ServletUtility.redirect(ORSView.PURCHASE_CTL, request, response);
+				
 			}
-
-			list = model.search(bean, 0, 0);
-			ServletUtility.setList(list, request);
+			
 			ServletUtility.forward(getView(), request, response);
 
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -89,8 +72,7 @@ public class CollegeListCtl extends BaseCtl {
 
 	@Override
 	protected String getView() {
-
-		return ORSView.COLLEGE_LIST_VIEW;
+		return ORSView.PURCHASE_LIST_VIEW;
 	}
 
 }

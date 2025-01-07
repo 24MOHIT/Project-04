@@ -123,7 +123,6 @@ public class CollegeModel {
 
 		if (bean != null) {
 			if (bean.getName() != null && bean.getName().length() > 0) {
-				System.out.println("Hello"+bean.getName());
 				sql.append(" and name like '" + bean.getName() + "'");
 			}
 		}
@@ -141,7 +140,6 @@ public class CollegeModel {
 		List list = new ArrayList();
 
 		while (rs.next()) {
-
 			bean = new CollegeBean();
 			bean.setId(rs.getLong(1));
 			bean.setName(rs.getString(2));

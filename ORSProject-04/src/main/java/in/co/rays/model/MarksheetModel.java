@@ -36,7 +36,7 @@ public class MarksheetModel {
 
 		StudentModel model = new StudentModel();
 
-		StudentBean studentbean = model.findByPK(bean.getId());
+		StudentBean studentbean = model.findByPK(bean.getStudentId());
 
 		bean.setName(studentbean.getFirstName() + " " + studentbean.getLastName());
 

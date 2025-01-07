@@ -23,10 +23,9 @@
 				scope="request"></jsp:useBean>
 
 			<%
-			List list = ServletUtility.getList(request);
-
+				List list = ServletUtility.getList(request);
 			%>
-			<table>-
+			<table>
 				<tr>
 					<th>Name :</th>
 					<td><input type="text" name="name" placeholder="Enter Name"
@@ -51,7 +50,7 @@
 
 
 				<%
-				Iterator it = list.iterator();
+					Iterator it = list.iterator();
 
 					while (it.hasNext()) {
 						bean = (CollegeBean) it.next();

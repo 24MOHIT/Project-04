@@ -14,6 +14,8 @@ import in.co.rays.model.CollegeModel;
 import in.co.rays.model.CourseModel;
 import in.co.rays.model.SubjectModel;
 import in.co.rays.util.DataUtility;
+import in.co.rays.util.DataValidator;
+import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
 @WebServlet(name = "/SubjectCtl", urlPatterns = {"/ctl/SubjectCtl"})
@@ -21,7 +23,34 @@ public class SubjectCtl extends BaseCtl {
 
 	@Override
 	protected boolean validate(HttpServletRequest request) {
-		return true;
+		
+		boolean isValid = true;
+		
+		String name = request.getParameter("name");
+		if (DataValidator.isNull(name)) {
+			request.setAttribute("name", PropertyReader.getValue("error.require", "Name"));
+			isValid = false;
+		} else if (!DataValidator.isName(name)) {
+			request.setAttribute("Name", "Invalid Name");
+			isValid = false;
+		}
+		
+		String courseid = request.getParameter("courseid");
+		if (DataValidator.isNull(courseid)) {
+			request.setAttribute("courseid", PropertyReader.getValue("error.require", "CorseName"));
+			isValid = false;
+		} 
+		
+		String description = request.getParameter("description");
+		if (DataValidator.isNull(description)) {
+			request.setAttribute("description", PropertyReader.getValue("error.require", "Description"));
+			isValid = false;
+		} else if (!DataValidator.isName(name)) {
+			request.setAttribute("description", "Invalid Description");
+			isValid = false;
+		}
+		
+		return isValid;
 	}
 	
 	@Override
@@ -73,6 +102,10 @@ public class SubjectCtl extends BaseCtl {
 				System.out.println("aya 1");
 				ServletUtility.setSuccessMessage("Data Added Successfully...", request);
 				ServletUtility.forward(getView(), request, response);
+		}
+		
+		if (OP_RESET.equalsIgnoreCase(op)) {
+			ServletUtility.redirect(ORSView.SUBJECT_CTL, request, response);
 		}
 			} catch (Exception e) {
 //				e.printStackTrace();
