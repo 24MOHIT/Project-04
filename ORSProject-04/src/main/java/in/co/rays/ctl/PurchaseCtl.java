@@ -80,7 +80,21 @@ public class PurchaseCtl extends BaseCtl {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		Long id = DataUtility.getLong(request.getParameter("id"));
+		PurchaseModel model = new PurchaseModel();
+		
+		if (id > 0) {
+			
+			try {
+				PurchaseBean bean = model.findByPk(id);
+				
+				ServletUtility.setBean(bean, request);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		ServletUtility.forward(getView(), request, response);
 	}
 
@@ -99,6 +113,12 @@ public class PurchaseCtl extends BaseCtl {
 				model.add(bean);
 				ServletUtility.setSuccessMessage("Data Added Successfully...", request);
 
+			}
+			
+			if (OP_UPDATE.equalsIgnoreCase(op)) {
+				
+				model.update(bean);
+				ServletUtility.setSuccessMessage("Data Update Successfully", request);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

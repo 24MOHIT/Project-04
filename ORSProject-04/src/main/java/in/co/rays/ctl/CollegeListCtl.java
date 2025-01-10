@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CollegeBean;
+import in.co.rays.bean.PatientBean;
 import in.co.rays.model.CollegeModel;
 import in.co.rays.util.DataUtility;
+import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
 @WebServlet(name = "/CollegeListCtl", urlPatterns = { "/ctl/CollegeListCtl" })
@@ -31,12 +33,25 @@ public class CollegeListCtl extends BaseCtl {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		List<CollegeBean> list = null;
+		List<CollegeBean> next = null;
+
 		CollegeModel model = new CollegeModel();
-		CollegeBean bean = new CollegeBean();
+		CollegeBean bean = (CollegeBean) populateBean(request);
+
+		int pageNo = 1;
+		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
 
 		try {
-			List list = model.search(bean, 0, 0);
+			list = model.search(bean, pageNo, pageSize);
+			next = model.search(bean, pageNo + 1, pageSize);
+
+			request.setAttribute("nextlistsize", next.size());
+
 			ServletUtility.setList(list, request);
+			ServletUtility.setPageNo(pageNo, request);
+			ServletUtility.setPageSize(pageSize, request);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +64,14 @@ public class CollegeListCtl extends BaseCtl {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		List list = null;
+		List<PatientBean> list = null;
+		List<PatientBean> next = null;
+
+		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
+		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
+
+		pageNo = (pageNo == 0) ? 1 : pageNo;
+		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 		String[] ids = request.getParameterValues("ids");
@@ -58,7 +80,7 @@ public class CollegeListCtl extends BaseCtl {
 		CollegeBean bean = (CollegeBean) populateBean(request);
 		try {
 			if (OP_DELETE.equalsIgnoreCase(op)) {
-
+				pageNo = 1;
 				for (String id : ids) {
 
 					model.delete(DataUtility.getLong(id));
@@ -67,8 +89,7 @@ public class CollegeListCtl extends BaseCtl {
 			}
 
 			if (OP_SEARCH.equalsIgnoreCase(op)) {
-				ServletUtility.setBean(bean, request);
-
+				pageNo = 1;
 			}
 
 			if (OP_NEW.equalsIgnoreCase(op)) {
@@ -76,9 +97,25 @@ public class CollegeListCtl extends BaseCtl {
 				ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
 				return;
 			}
+			
+			if (OP_NEXT.equalsIgnoreCase(op)) {
+				pageNo++;
+			}
+			
+			if (OP_PREVIOUS.equalsIgnoreCase(op)) {
+				pageNo--;
+			}
 
-			list = model.search(bean, 0, 0);
+			list = model.search(bean, pageNo, pageSize);
+			next = model.search(bean, pageNo + 1, pageSize);
+			
+			request.setAttribute("nextlistsize", next.size());
+			
+			ServletUtility.setBean(bean, request);
 			ServletUtility.setList(list, request);
+			ServletUtility.setPageNo(pageNo, request);
+			ServletUtility.setPageSize(pageSize, request);
+			
 			ServletUtility.forward(getView(), request, response);
 
 		} catch (Exception e) {

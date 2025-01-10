@@ -72,9 +72,13 @@
 				<a href="<%=ORSView.MARKSHEET_CTL%>">Add Marksheet</a>|
 				
 				<a href="<%=ORSView.PURCHASE_CTL%>">Add Purchase</a>|
-				<a href="<%=ORSView.PURCHASE_LIST_CTL%>">Purchase List</a>
+				<a href="<%=ORSView.PURCHASE_LIST_CTL%>">Purchase List</a>|
+				<a href="<%=ORSView.PATIENT_CTL%>">Add Patient</a>|
+				<a href="<%=ORSView.PATIENT_LIST_CTL%>">Patient List</a>|
+				<a href="<%=ORSView.CART_CTL %>">Add Cart</a>|
+				<a href="<%=ORSView.CART_LIST_CTL%>">Cart List</a>|
 				
-				
+				<a href="<%=ORSView.JAVA_DOC_VIEW%>" target="blank">Java Doc</a>
 		</tr>
 		<%
 			}

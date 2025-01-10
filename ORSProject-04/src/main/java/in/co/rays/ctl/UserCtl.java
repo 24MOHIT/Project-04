@@ -20,6 +20,11 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * @author praja
+ * Userctl class
+ *
+ */
 @WebServlet(name = "UserCtl", urlPatterns = {"/ctl/UserCtl"})
 
 public class UserCtl extends BaseCtl {

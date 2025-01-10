@@ -1,3 +1,5 @@
+<%@page import="in.co.rays.util.PropertyReader"%>
+<%@page import="in.co.rays.util.DataUtility"%>
 <%@page import="in.co.rays.model.CollegeModel"%>
 <%@page import="in.co.rays.ctl.CollegeListCtl"%>
 <%@page import="in.co.rays.util.ServletUtility"%>
@@ -17,14 +19,29 @@
 	<%@ include file="Header.jsp"%>
 	<div align="center">
 		<form action="<%=ORSView.COLLEGE_LIST_CTL%>" method="post">
+		
 			<h1>College List</h1>
+
+
 
 			<jsp:useBean id="bean" class="in.co.rays.bean.CollegeBean"
 				scope="request"></jsp:useBean>
 
 			<%
 				List list = ServletUtility.getList(request);
+			
+			int pageNo = ServletUtility.getPageNo(request);
+			int pageSize = ServletUtility.getPageSize(request);
+			int index = ((pageNo - 1) * pageSize) + 1;
+			int nextPageSize = DataUtility.getInt(request.getAttribute("nextlistsize").toString());
+			
+			Iterator it = list.iterator();
+
 			%>
+			
+			<input type="hidden" name="pageNo" value="<%=pageNo%>"> <input
+				type="hidden" name="pageSize" value="<%=pageSize%>">
+			
 			<table>
 				<tr>
 					<th>Name :</th>
@@ -40,17 +57,18 @@
 				<tr>
 					<th><input type="checkbox" id="selectall"></th>
 					<th>S.No.</th>
+					
 					<th>Name</th>
 					<th>Address</th>
 					<th>State</th>
 					<th>City</th>
 					<th>Phone No.</th>
+					<th>Edit</th>
 				</tr>
 
 
 
 				<%
-					Iterator it = list.iterator();
 
 					while (it.hasNext()) {
 						bean = (CollegeBean) it.next();
@@ -59,24 +77,35 @@
 				<tr align="center">
 					<td><input type="checkbox" name="ids" class="case"
 						value="<%=bean.getId()%>"></td>
-					<td><%=bean.getId()%></td>
+						
+						<td><%=index++%></td>
+					
 					<td><%=bean.getName()%></td>
 					<td><%=bean.getAddress()%></td>
 					<td><%=bean.getState()%></td>
 					<td><%=bean.getCity()%></td>
 					<td><%=bean.getPhoneno()%></td>
+					<td><a href="<%=ORSView.COLLEGE_CTL%>?id=<%=bean.getId()%>">edit</a></td>
 				</tr>
 
 				<%
 					}
 				%>
 			</table>
-			<table>
+			<table width ="100%">
+				<td align="left"><input type="submit" name="operation"
+					value="<%=CollegeListCtl.OP_PREVIOUS%>"
+					<%=(pageNo == 1) ? "disabled" : ""%>></td>
+
 				<td><input type="submit" name="operation"
 					value="<%=CollegeListCtl.OP_NEW%>"></td>
 
 				<td><input type="submit" name="operation"
 					value="<%=CollegeListCtl.OP_DELETE%>"></td>
+
+				<td align="right"><input type="submit" name="operation"
+					value="<%=CollegeListCtl.OP_NEXT%>"
+					<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
 			</table>
 
 		</form>

@@ -19,7 +19,18 @@
 			<jsp:useBean id="bean" class="in.co.rays.bean.CollegeBean"
 				scope="request"></jsp:useBean>
 
+			<%
+				if (bean != null && bean.getId() > 0) {
+			%>
+			<h1>Update College</h1>
+			<%
+				} else {
+			%>
+
 			<h1>Add College</h1>
+			<%
+				}
+			%>
 
 			<%
 				if (ServletUtility.getSuccessMessage(request) != null) {
@@ -91,10 +102,28 @@
 				</tr>
 			</table>
 			<table>
+			
+			<%
+				if (bean != null && bean.getId() > 0) {
+			%>
+			<td><input type="submit" name="operation"
+					value="<%=CollegeCtl.OP_UPDATE%>"></td>
 				<td><input type="submit" name="operation"
+					value="<%=CollegeCtl.OP_CANCEL%>"></td>
+			<%
+				} else {
+			%>
+
+			<td><input type="submit" name="operation"
 					value="<%=CollegeCtl.OP_SAVE%>"></td>
 				<td><input type="submit" name="operation"
 					value="<%=CollegeCtl.OP_RESET%>"></td>
+			<%
+				}
+			%>
+			
+			
+				
 
 			</table>
 

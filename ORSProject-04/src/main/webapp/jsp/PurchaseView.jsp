@@ -21,7 +21,21 @@
 
 		<div align="center">
 
+			<%
+				if (bean != null && bean.getId() > 0) {
+			%>
+
+			<h1>Update Purchase</h1>
+
+			<%
+				} else {
+			%>
+
 			<h1>Add Purchase</h1>
+
+			<%
+				}
+			%>
 
 			<h3>
 				<span style="color: green"><%=ServletUtility.getSuccessMessage(request)%></span>
@@ -92,10 +106,23 @@
 			</table>
 
 			<table>
+				<%
+					if (bean != null && bean.getId() > 0) {
+				%>
+				<td></td>
+				<td colspan="3"><input type="submit" name="operation"
+					value="<%=PurchaseCtl.OP_UPDATE%>" /> <input type="submit"
+					name="operation" value="<%=PurchaseCtl.OP_CANCEL%>" /></td>
+				<%
+					} else {
+				%>
 				<td></td>
 				<td colspan="3"><input type="submit" name="operation"
 					value="<%=PurchaseCtl.OP_SAVE%>" /> <input type="submit"
 					name="operation" value="<%=PurchaseCtl.OP_RESET%>" /></td>
+				<%
+					}
+				%>
 			</table>
 
 

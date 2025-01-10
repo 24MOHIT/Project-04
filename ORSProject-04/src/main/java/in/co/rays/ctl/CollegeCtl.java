@@ -80,6 +80,22 @@ public class CollegeCtl extends BaseCtl {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		long id = DataUtility.getLong(request.getParameter("id"));
+		
+		CollegeModel model = new CollegeModel();
+		
+		if (id > 0) {
+			
+			try {
+				CollegeBean bean = model.findByPk(id);
+				ServletUtility.setBean(bean, request);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		ServletUtility.forward(getView(), request, response);
 	}
@@ -120,6 +136,17 @@ public class CollegeCtl extends BaseCtl {
 			if (OP_RESET.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
 				return;
+			}
+			
+			if (OP_CANCEL.equalsIgnoreCase(op)) {
+				ServletUtility.redirect(ORSView.COLLEGE_CTL, request, response);
+				return;
+			}
+			
+			if (OP_UPDATE.equalsIgnoreCase(op)) {
+				
+				model.update(bean);
+				ServletUtility.setSuccessMessage("Data Update Successfully", request);
 			}
 			
 		} catch (Exception e) {

@@ -117,7 +117,6 @@ public class RoleCtl extends BaseCtl {
 
 			try {
 				model.update(bean);
-				System.out.println("aya");
 				ServletUtility.setSuccessMessage("User Update Successfully...", request);
 				ServletUtility.forward(getView(), request, response);
 			} catch (Exception e) {
